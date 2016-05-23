@@ -57,15 +57,14 @@ public class MainApp extends Application {
 		Scene scene = new Scene(root, 1300, 500);
 
 		this.primaryStage = primaryStage;
-		
+		/*
 		Screen screen = Screen.getPrimary();
 		Rectangle2D bounds = screen.getVisualBounds();
-
 		primaryStage.setX(bounds.getMinX());
 		primaryStage.setY(bounds.getMinY());
 		primaryStage.setWidth(bounds.getWidth());
 		primaryStage.setHeight(bounds.getHeight());
-		
+		*/
 		this.primaryStage.setTitle("Rocket");
 		this.primaryStage.setScene(scene);
 		this.primaryStage.show();
