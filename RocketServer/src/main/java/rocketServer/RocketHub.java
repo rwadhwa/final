@@ -38,7 +38,8 @@ public class RocketHub extends Hub {
 				int creditScore = lq.getiCreditScore();
 				lq.setdRate(RateBLL.getRate(creditScore));
 			} catch (RateException e) {
-				sendToAll(e);
+				
+				sendToAll("No rate found for this credit score for clientId:" + ClientID);
 			}
 			
 			double r = lq.getdRate() / (100*12);

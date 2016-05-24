@@ -84,21 +84,12 @@ public class MortgageController {
 	public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
-
-	// TODO - RocketClient.RocketMainController
-	// Call this when btnPayment is pressed, calculate the payment
 	@FXML
 	public void btnCalculatePayment(ActionEvent event) {
 		Object message = null;
-		// TODO - RocketClient.RocketMainController
+		
 		Action a = new Action(eAction.CalculatePayment);
 		LoanRequest lq = new LoanRequest();
-		// TODO - RocketClient.RocketMainController
-		// set the loan request details... rate, term, amount, credit score,
-		// downpayment
-		// I've created you an instance of lq... execute the setters in lq
-		
-		// set total cost of house to be HouseCost - DownPayment
 		lq.setdAmount(Double.parseDouble(txtHouseCost.getText())-Double.parseDouble(txtDownPayment.getText()));
 		lq.setiDownPayment(Integer.parseInt(txtDownPayment.getText()));
 		lq.setIncome(Double.parseDouble(txtIncome.getText()));
@@ -110,24 +101,17 @@ public class MortgageController {
 			lq.setdRate(-1);
 		}
 		lq.setiTerm(Integer.parseInt(cbTerm.getSelectionModel().getSelectedItem().toString()));
-
 		a.setLoanRequest(lq);
-
-		// send lq as a message to RocketHub
 		mainApp.messageSend(lq);
 	}
 
 	public void HandleLoanRequestDetails(LoanRequest lRequest) {
-		// TODO - RocketClient.HandleLoanRequestDetails
-		// lRequest is an instance of LoanRequest.
-		// after it's returned back from the server, the payment (dPayment)
-		// should be calculated.
-		// Display dPayment on the form, rounded to two decimal places
+		
 		double rate = lRequest.getdRate();
 		double pmt = Math.round(lRequest.getdPayment() * 100.00) / 100.00;
 		if (rate == -1) {
-			txtRate.setText("N/A");
-			txtMonthlyPayment.setText("N/A with credit score");
+			txtRate.setText("n/a");
+			txtMonthlyPayment.setText("Credit score n/a");
 		} else {
 			txtRate.setText(Double.toString(rate));
 			if ((lRequest.getiTerm() == 30 && pmt * 12 * 30 < (lRequest.getIncome() - lRequest.getExpenses() * 12) * 30)
@@ -135,7 +119,7 @@ public class MortgageController {
 							&& pmt * 12 * 15 < (lRequest.getIncome() - lRequest.getExpenses() * 12) * 15)) {
 				txtMonthlyPayment.setText(Double.toString(pmt));
 			} else {
-				txtMonthlyPayment.setText("House Cost too high");
+				txtMonthlyPayment.setText("The house cost is too high");
 			}
 		}
 
